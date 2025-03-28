@@ -59,3 +59,23 @@ export const updateProduct = async (req: Request, res: Response): Promise<void> 
     res.status(500).json({ error: "Internal Server Error" });
   }
 }
+
+export const updateAvailability = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params
+    const product = await Products.findByPk(id)
+
+    if(!product){
+      res.status(404).json({ error: "Product not found"})
+      return
+    }
+
+    product.availability = !product.dataValues.availability
+    await product.save()
+
+    res.json({ data: product})
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}

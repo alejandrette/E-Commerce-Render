@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createProducts, getPorducts, getProductById, updateProduct } from "./handlers/products";
+import { createProducts, getPorducts, getProductById, updateAvailability, updateProduct } from "./handlers/products";
 import { body, param } from "express-validator";
 import { handleInpuErrors } from "./middleware";
 
@@ -40,6 +40,10 @@ router.put("/products/:id",
     .isBoolean().withMessage('Availability nor valid'),
   handleInpuErrors,
   updateProduct
+)
+
+router.patch("/products/:id",
+  updateAvailability
 )
 
 export default router;
