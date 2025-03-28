@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createProducts, getPorducts, getProductById } from "./handlers/products";
+import { createProducts, getPorducts, getProductById, updateProduct } from "./handlers/products";
 import { body, param } from "express-validator";
 import { handleInpuErrors } from "./middleware";
 
