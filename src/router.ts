@@ -20,14 +20,25 @@ router.post("/products",
     .notEmpty().withMessage('Name is empty')
     .isString().withMessage("Name must be a string"),
   body('price')
-    .notEmpty().withMessage('Name is empty')
-    .isNumeric().withMessage('Value not Valid')
+    .notEmpty().withMessage('Price is empty')
+    .isNumeric().withMessage('Value not valid')
     .custom(value => value > 0).withMessage('Value not valid'),
   handleInpuErrors,
   createProducts
 );
 
 router.put("/products/:id",
+  body('name')
+    .notEmpty().withMessage('Name is empty')
+    .isString().withMessage("Name must be a string"),
+  body('price')
+    .notEmpty().withMessage('Price is empty')
+    .isNumeric().withMessage('Value not Valid')
+    .custom(value => value > 0).withMessage('Value not valid'),
+  body('availability')
+    .notEmpty().withMessage('Availability is empty')
+    .isBoolean().withMessage('Availability nor valid'),
+  handleInpuErrors,
   updateProduct
 )
 

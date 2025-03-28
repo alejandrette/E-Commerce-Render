@@ -3,7 +3,9 @@ import Products from "../models/Product.model"
 
 export const getPorducts = async (req: Request, res: Response): Promise<void> => {
   try {
-    const products = await Products.findAll()
+    const products = await Products.findAll({
+      order: [["id", 'ASC']]
+    })
     res.json({ data: products})
   } catch (error) {
     console.log(error)
