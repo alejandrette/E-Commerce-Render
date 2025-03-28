@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createProducts, getPorducts, getProductById, updateAvailability, updateProduct } from "./handlers/products";
+import { createProducts, deleteProduct, getPorducts, getProductById, updateAvailability, updateProduct } from "./handlers/products";
 import { body, param } from "express-validator";
 import { handleInpuErrors } from "./middleware";
 
@@ -47,6 +47,13 @@ router.patch("/products/:id",
     .isInt().withMessage('ID not valid'),
   handleInpuErrors,
   updateAvailability
+)
+
+router.delete("/products/:id",
+  param('id')
+    .isInt().withMessage('ID not valid'),
+  handleInpuErrors,
+  deleteProduct
 )
 
 export default router;
