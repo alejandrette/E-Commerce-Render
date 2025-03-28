@@ -43,6 +43,9 @@ router.put("/products/:id",
 )
 
 router.patch("/products/:id",
+  param('id')
+    .isInt().withMessage('ID not valid'),
+  handleInpuErrors,
   updateAvailability
 )
 
