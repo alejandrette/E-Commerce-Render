@@ -2,6 +2,8 @@ import express from "express";
 import colors  from "colors";
 import router from "./router";
 import db from "./config/db";
+import swaggerUi from "swagger-ui-express"
+import swaggerSpec from "./config/swagger";
 
 // Conectar con la base de datos
 async function connectDB() {
@@ -19,9 +21,8 @@ connectDB()
 
 const server = express()
 
-// Leer datos form
-server.use(express.json())
-
 server.use('/', router)
+
+server.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
 export default server
