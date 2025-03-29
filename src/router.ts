@@ -4,30 +4,75 @@ import { body, param } from "express-validator";
 import { handleInpuErrors } from "./middleware";
 
 const router = Router();
+/**
+ * @swagger
+ * components:
+ *    schemas:
+ *      Product:
+ *        type: object
+ *        properties:
+ *          id:
+ *            type: integer
+ *            description: The product ID 
+ *            example: 1
+ *          name:
+ *            type: string
+ *            description: The product name 
+ *            example: Monitor Curvo
+ *          price:
+ *            type: integer
+ *            description: The product price 
+ *            example: 300
+ *          availability:
+ *            type: boolean
+ *            description: The product availability 
+ *            example: true
+ */
 
-// Rutas
-router.get("/products", getPorducts);
+/**
+ * @swagger
+ * /api/products:
+ *    get:
+ *      summary: Get a list of products
+ *      tags:
+ *        - Products
+ *      description: Return a list of products
+ *      responses: 
+ *        200:
+ *            description: Successful response
+ *            content:
+ *                application/json:
+ *                  schema:
+ *                      type: array
+ *                      items:
+ *                          $ref: '#/components/schemas/Product'  
+ * 
+ * 
+ */
+router.get("/", getPorducts);
 
-router.get("/products/:id", 
+router.get("/:id", 
   param('id')
     .isInt().withMessage('ID not valid'),
   handleInpuErrors,
   getProductById
 );
 
-router.post("/products", 
+router.post("/", 
   body('name')
-    .notEmpty().withMessage('Name is empty')
+    .trim()
+    .notEmpty().withMessage("Name is empty")
     .isString().withMessage("Name must be a string"),
+
   body('price')
     .notEmpty().withMessage('Price is empty')
-    .isNumeric().withMessage('Value not valid')
-    .custom(value => value > 0).withMessage('Value not valid'),
+    .isFloat({ gt: 0 }).withMessage('Price must be a positive number'),
+
   handleInpuErrors,
   createProducts
 );
 
-router.put("/products/:id",
+router.put("/:id",
   body('name')
     .notEmpty().withMessage('Name is empty')
     .isString().withMessage("Name must be a string"),
@@ -42,14 +87,14 @@ router.put("/products/:id",
   updateProduct
 )
 
-router.patch("/products/:id",
+router.patch("/:id",
   param('id')
     .isInt().withMessage('ID not valid'),
   handleInpuErrors,
   updateAvailability
 )
 
-router.delete("/products/:id",
+router.delete("/:id",
   param('id')
     .isInt().withMessage('ID not valid'),
   handleInpuErrors,

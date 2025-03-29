@@ -21,7 +21,8 @@ connectDB()
 
 const server = express()
 
-server.use('/', router)
+server.use(express.json());
+server.use('/api/products', router)
 
 server.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
