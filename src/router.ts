@@ -191,9 +191,6 @@ router.put("/:id",
     .notEmpty().withMessage('Price is empty')
     .isNumeric().withMessage('Value not Valid')
     .custom(value => value > 0).withMessage('Value not valid'),
-  body('availability')
-    .notEmpty().withMessage('Availability is empty')
-    .isBoolean().withMessage('Availability nor valid'),
   handleInpuErrors,
   updateProduct
 )
